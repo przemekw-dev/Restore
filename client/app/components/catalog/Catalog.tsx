@@ -1,11 +1,15 @@
+import { useEffect, useState } from "react";
 import type { Product } from "../../types/product";
 import ProductList from "./ProductList";
 
-interface CatalogProps {
-  products: Product[];
-}
-
-const Catalog: React.FC<CatalogProps> = ({ products }) => {
+const Catalog = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  useEffect(() => {
+    fetch("https://localhost:5001/api/products")
+      .then((res) => res.json())
+      .then((data) => setProducts(data))
+      .catch((er) => console.error("Error: ", er));
+  }, []);
   return (
     <>
       <ProductList products={products} />
