@@ -3,6 +3,7 @@ import {
   Badge,
   Box,
   IconButton,
+  LinearProgress,
   List,
   ListItem,
   Toolbar,
@@ -10,6 +11,7 @@ import {
 } from "@mui/material";
 import { DarkMode, LightMode, ShoppingCart } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
+import { useAppSelector } from "../../store";
 
 const midLinks = [
   {
@@ -55,6 +57,7 @@ interface Props {
 }
 
 const NavBar: React.FC<Props> = ({ theme, onThemeChange }) => {
+  const { isLoading } = useAppSelector((state) => state.ui);
   console.log("Theme: ", theme);
   return (
     <AppBar sx={{ color: theme === "dark" ? "white" : "white" }}>
@@ -107,6 +110,12 @@ const NavBar: React.FC<Props> = ({ theme, onThemeChange }) => {
           </List>
         </Box>
       </Toolbar>
+
+      {isLoading && (
+        <Box sx={{ width: "100%" }}>
+          <LinearProgress color="secondary" />
+        </Box>
+      )}
     </AppBar>
   );
 };
